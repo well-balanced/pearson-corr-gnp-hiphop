@@ -39,3 +39,5 @@ def print_pearson_corr_result(body):
     """
     corr = body.corr(method='pearson')
     print(corr)
+
+visualize()
