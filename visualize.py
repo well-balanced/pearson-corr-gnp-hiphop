@@ -4,7 +4,7 @@ import matplotlib.pylab as plt
 import csv
 from utils import load_data_as_dict
 
-def visualize():
+def visualize() -> None:
     gnp_dict = load_data_as_dict('gnp.csv')
     preference_dict = load_data_as_dict('preference.csv')
 
@@ -29,7 +29,7 @@ def visualize():
     else:
         print('data consistency was away')
 
-def print_pearson_corr_result(body):
+def print_pearson_corr_result(body) -> None:
     """
                             GNP  Hip-Hop preference
     GNP                 1.000000           -0.283328

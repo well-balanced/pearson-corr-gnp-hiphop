@@ -23,9 +23,10 @@ def main():
 
     # remove outliers and export as csv
     filtered_dict = {key: value for key, value in preference_dict.items() if value is not None}
-    sanitized_dict = {key: value  for key, value in gnp_dict.items() if key in filtered_dict.keys()}
-    export_as_csv('preference.csv', filtered_dict)
-    export_as_csv('gnp.csv', sanitized_dict)
+    sanitized_preference_dict = catch_outlier(filtered_dict)
+    sanitized_gnp_dict = {key: value  for key, value in gnp_dict.items() if key in sanitized_preference_dict.keys()}
+    export_as_csv('preference.csv', sanitized_preference_dict)
+    export_as_csv('gnp.csv', sanitized_gnp_dict)
 
 def fetch_trend_results(pytrends, keywords: list, iso_code: str, start_date: str, end_date: str):
     """
@@ -69,5 +70,15 @@ def get_preference_score(iso_code: str) -> float or int or None:
                 return None
     preference_score = round(aggregate / count, 2)
     return preference_score
+
+def catch_outlier(dic: dict) -> dict:
+    """
+    Except outlier has score which is treble compare with average
+    """
+    values = dic.values()
+    average = sum(values) / len(values)
+    print(average)
+    filtered_dic = {key: value for key, value in dic.items() if value < average * 3}
+    return filtered_dic
 
 main()
